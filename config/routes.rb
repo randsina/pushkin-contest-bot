@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  match '/registration', to: 'contests#registration', via: :post
+  match '/quiz', to:'contests#quiz', via: :post
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
