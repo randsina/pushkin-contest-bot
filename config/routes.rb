@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  match '/registration', to: 'contests#registration', via: :post
-  match '/quiz', to: 'contests#quiz', via: :post
+  post '/registration', to: 'contests#registration'
+  post '/quiz', to: 'contests#quiz'
 
   root 'contests#registration'
   # The priority is based upon order of creation: first created -> highest priority.
