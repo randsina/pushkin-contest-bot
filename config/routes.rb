@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   post '/registration', to: 'contests#registration'
   post '/quiz', to: 'contests#quiz'
 
-  root 'contests#registration'
+  # root 'contests#registration'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
