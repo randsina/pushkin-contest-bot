@@ -1,7 +1,7 @@
 class ContestsController < ApplicationController
   TOKEN = ''
   def registration
-    TOKEN = params[:token]
+    token = params[:token]
     question = params[:question]
     render json: {answer: 'ruuuby'}
   end
