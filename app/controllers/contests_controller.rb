@@ -1,10 +1,13 @@
 class ContestsController < ApplicationController
   TOKEN = '0e0cdfcd1bf6490f8107f5a4cae91d37'
   def registration
-    token = params[:token]
-    puts token
-    question = params[:question]
-    render json: {answer: 'снежные'}
+    token = Token.new
+    token.name = params[:token]
+    if token.save
+      puts token
+      question = params[:question]
+      render json: {answer: 'ruuuby'}
+    end
   end
 
   def quiz
