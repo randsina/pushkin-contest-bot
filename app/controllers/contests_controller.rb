@@ -13,10 +13,13 @@ class ContestsController < ApplicationController
 
   def quiz
     puts params[:contest]
+    puts params[:question]
+    puts params[:level]
+    puts params[:id]
     result = self.send("level_#{params[:level]}", params[:question])
     send_answer(result, params[:id])
     # puts answer
-    render nothing: true, status: :ok
+    render nothing: true
   end
 
   def level_1 question
