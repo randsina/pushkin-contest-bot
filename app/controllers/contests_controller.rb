@@ -9,8 +9,9 @@ class ContestsController < ApplicationController
 
   def quiz
     puts params[:contest]
-    answer = self.send("level_#{params[:level]}", params[:question])
-    send_answer(answer, params[:task_id])
+    # answer = self.send("level_#{params[:level]}", params[:question])
+    # send_answer(answer, params[:task_id])
+    # puts answer
     render nothing: true
   end
 
