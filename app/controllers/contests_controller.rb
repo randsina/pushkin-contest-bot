@@ -1,5 +1,5 @@
 class ContestsController < ApplicationController
-  TOKEN = '0e0cdfcd1bf6490f8107f5a4cae91d37'
+  TOKEN = 'b7f513497ed4c72c2ff2db9ee7cb24d4'
   def registration
     token = Token.new
     token.name = params[:token]
