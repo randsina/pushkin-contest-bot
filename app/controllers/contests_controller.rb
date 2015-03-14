@@ -1,10 +1,11 @@
 class ContestsController < ApplicationController
   TOKEN = 'b7f513497ed4c72c2ff2db9ee7cb24d4'
+  URI = URI("http://pushkin-contest.ror.by/quiz")
+
   def registration
     token = Token.new
     token.name = params[:token]
     if token.save
-      puts token
       question = params[:question]
       render json: {answer: 'снежные'}
     end
@@ -12,8 +13,8 @@ class ContestsController < ApplicationController
 
   def quiz
     puts params[:contest]
-    # answer = self.send("level_#{params[:level]}", params[:question])
-    send_answer(answer, params[:task_id])
+    result = self.send("level_#{params[:level]}", params[:question])
+    send_answer(result, params[:id])
     # puts answer
     render nothing: true
   end
@@ -39,12 +40,7 @@ class ContestsController < ApplicationController
   end
 
   def send_answer(answer, task_id)
-    uri = URI("http://pushkin-contest.ror.by/quiz")
-    parameters = {
-      answer: answer,
-      token: TOKEN,
-      task_id: task_id
-    }
-    Net::HTTP.post_form(uri, parameters)
+    parameters = {answer: answer, token: TOKEN, task_id: task_id}
+    Net::HTTP.post_form(URI, parameters)
   end
 end
