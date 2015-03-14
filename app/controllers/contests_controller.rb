@@ -16,9 +16,12 @@ class ContestsController < ApplicationController
     puts params[:question]
     puts params[:level]
     puts params[:id]
+
     result = self.send("level_#{params[:level]}", params[:question])
-    send_answer(result, params[:id])
-    # puts answer
+
+    parameters = {answer: result, token: TOKEN, task_id: params[:id]}
+    Net::HTTP.post_form(URI, parameters)
+
     render nothing: true
   end
 
@@ -40,10 +43,5 @@ class ContestsController < ApplicationController
 
   def level_5 question
     "level_5 #{question}"
-  end
-
-  def send_answer(answer, task_id)
-    parameters = {answer: answer, token: TOKEN, task_id: task_id}
-    Net::HTTP.post_form(URI, parameters)
   end
 end
