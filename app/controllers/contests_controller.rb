@@ -16,7 +16,7 @@ class ContestsController < ApplicationController
     result = self.send("level_#{params[:level]}", params[:question])
     send_answer(result, params[:id])
     # puts answer
-    render nothing: true
+    render nothing: true, status: :ok
   end
 
   def level_1 question
