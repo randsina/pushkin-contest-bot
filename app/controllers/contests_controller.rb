@@ -6,7 +6,7 @@ class ContestsController < ApplicationController
     if token.save
       puts token
       question = params[:question]
-      render json: {answer: 'ruuuby'}
+      render json: {answer: 'снежные'}
     end
   end
 
