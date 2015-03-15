@@ -19,8 +19,8 @@ class ContestsController < ApplicationController
 
     result = self.send("level_#{params[:level]}", params[:question])
 
-    parameters = {answer: result, token: TOKEN, task_id: params[:id]}
-    Net::HTTP.post_form(URI, parameters)
+    # parameters = {answer: result, token: TOKEN, task_id: params[:id]}
+    # Net::HTTP.post_form(URI, parameters)
 
     render nothing: true
   end
