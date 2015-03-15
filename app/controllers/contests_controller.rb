@@ -12,8 +12,6 @@ class ContestsController < ApplicationController
   end
 
   def quiz
-    hash = JSON.parse(File.read(File.expand_path('../../../db/poems-full.json', __FILE__)))
-
     result = self.send("level_#{params[:level]}", convert(params[:question]))
 
     parameters = {answer: result, token: TOKEN, task_id: params[:id]}
