@@ -12,7 +12,9 @@ class ContestsController < ApplicationController
   end
 
   def quiz
-    result = self.send("level_#{params[:level]}", params[:question])
+    hash = JSON.parse(File.read(File.expand_path('../../../db/poems-full.json', __FILE__)))
+
+    result = self.send("level_#{params[:level]}", convert(params[:question]))
 
     parameters = {answer: result, token: TOKEN, task_id: params[:id]}
     Net::HTTP.post_form(URI, parameters)
@@ -20,8 +22,10 @@ class ContestsController < ApplicationController
     render nothing: true
   end
 
+  private
+
   def level_1 question
-    "level_1 #{question}"
+    Poem.find_by(row: question).title
   end
 
   def level_2 question
@@ -38,5 +42,9 @@ class ContestsController < ApplicationController
 
   def level_5 question
     "level_5 #{question}"
+  end
+
+  def convert row
+    row.mb_chars.gsub(/\p{P}/, '').gsub(/\s/, ' ').downcase.strip.to_s
   end
 end
