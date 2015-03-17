@@ -2,8 +2,4 @@ require 'net/http'
 require 'pry'
 
 postData = Net::HTTP.post_form(URI.parse('http://localhost:3000/quiz'),
-  {"question"=>"К Стамбулу грозно притекли", "id"=>55270, "level"=>1})
-
-# binding.pry
-
-puts postData.body
+  {"question"=>"О ты, певцу дубрав %WORD% знакомый гений", "id"=>55270, "level"=>2})

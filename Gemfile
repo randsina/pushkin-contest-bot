@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
 ruby '2.2.1'
+gem 'pg_search', '~> 0.7.9'
 gem 'rails_12factor', '~> 0.0.3', group: :production
 gem 'pry-rails', '~> 0.3.3'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'

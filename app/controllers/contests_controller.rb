@@ -14,6 +14,7 @@ class ContestsController < ApplicationController
   def quiz
     result = self.send("level_#{params[:level]}", convert(params[:question]))
 
+    puts result
     parameters = {answer: result, token: TOKEN, task_id: params[:id]}
     Net::HTTP.post_form(URI, parameters)
 
@@ -27,7 +28,9 @@ class ContestsController < ApplicationController
   end
 
   def level_2 question
-    "level_2 #{question}"
+    first, second = question.split(' word ')
+    poem = Poem.find_by("row LIKE ? AND row LIKE ?","%#{first}%", "%#{second}%")
+    (poem.row.split(' ') - question.split(' '))[0]
   end
 
   def level_3 question
