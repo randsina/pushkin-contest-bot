@@ -31,7 +31,7 @@ class ContestsController < ApplicationController
     question = convert(question)
     first, second = question.split('word')
     poem = Poem.find_by("row LIKE ? AND row LIKE ?","#{first}%", "%#{second}")
-    (poem.row.split(' ') - question.split(' '))[0]
+    (poem.row.split(' ') - question.split(' '))[0] if poem
   end
 
   def level_3 question
@@ -43,7 +43,17 @@ class ContestsController < ApplicationController
   end
 
   def level_5 question
-    "level_5 #{question}"
+    question = convert(question)
+    words = question.split(' ')
+    questions = words.map { |word| question.sub(word, '%WORD%') }
+    index, answer = 0, ''
+    questions.each_with_index do |row, i|
+      if answer = level_2(row)
+        index = i
+        break
+      end
+    end
+    "#{answer},#{words[index]}"
   end
 
   def convert row
