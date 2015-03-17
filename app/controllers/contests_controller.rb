@@ -13,6 +13,7 @@ class ContestsController < ApplicationController
 
   def quiz
     result = self.send("level_#{params[:level]}", params[:question])
+    puts result
 
     parameters = {answer: result, token: TOKEN, task_id: params[:id]}
     Net::HTTP.post_form(URI, parameters)
