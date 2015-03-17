@@ -1,1 +1,1 @@
-web: bundle exec rails server thin -p 16892 -e production
+web: bundle exec rails server thin -p $PORT -e production
