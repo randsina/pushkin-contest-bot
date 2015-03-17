@@ -12,7 +12,7 @@ class ContestsController < ApplicationController
   end
 
   def quiz
-    result = self.send("level_#{params[:level]}", convert(params[:question]))
+    result = self.send("level_#{params[:level]}", params[:question])
 
     puts result
     parameters = {answer: result, token: TOKEN, task_id: params[:id]}
@@ -24,16 +24,18 @@ class ContestsController < ApplicationController
   private
 
   def level_1 question
-    Poem.find_by(row: question).title
+    Poem.find_by(row: convert(question)).title
   end
 
   def level_2 question
+    question = convert(question)
     first, second = question.split('word')
     poem = Poem.find_by("row LIKE ? AND row LIKE ?","#{first}%", "%#{second}")
     (poem.row.split(' ') - question.split(' '))[0]
   end
 
   def level_3 question
+    puts question
     question.split("\n").map { |row| level_2(row) }.join(',')
   end
 
