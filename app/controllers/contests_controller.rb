@@ -28,17 +28,17 @@ class ContestsController < ApplicationController
   end
 
   def level_2 question
-    first, second = question.split(' word ')
-    poem = Poem.find_by("row LIKE ? AND row LIKE ?","%#{first}%", "%#{second}%")
+    first, second = question.split('word')
+    poem = Poem.find_by("row LIKE ? AND row LIKE ?","#{first}%", "%#{second}")
     (poem.row.split(' ') - question.split(' '))[0]
   end
 
   def level_3 question
-    "level_3 #{question}"
+    question.split("\n").map { |row| level_2(row) }.join(',')
   end
 
   def level_4 question
-    "level_4 #{question}"
+    question.split("\n").map { |row| level_2(row) }.join(',')
   end
 
   def level_5 question
