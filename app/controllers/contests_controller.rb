@@ -48,6 +48,6 @@ class ContestsController < ApplicationController
   end
 
   def convert row
-    row.mb_chars.gsub(/\p{P}/, '').gsub(/\s/, ' ').downcase.strip.to_s
+    row.mb_chars.gsub(/\p{P}/, '').gsub(/\s/, ' ').downcase.normalize.strip.to_s
   end
 end
