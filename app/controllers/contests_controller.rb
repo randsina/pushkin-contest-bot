@@ -14,7 +14,6 @@ class ContestsController < ApplicationController
   def quiz
     result = self.send("level_#{params[:level]}", params[:question])
 
-    puts result
     parameters = {answer: result, token: TOKEN, task_id: params[:id]}
     Net::HTTP.post_form(URI, parameters)
 
@@ -35,7 +34,6 @@ class ContestsController < ApplicationController
   end
 
   def level_3 question
-    puts question
     question.split("\n").map { |row| level_2(row) }.join(',')
   end
 
