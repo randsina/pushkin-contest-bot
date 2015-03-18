@@ -56,6 +56,18 @@ class ContestsController < ApplicationController
     "#{answer},#{words[index]}"
   end
 
+  def level_6 question
+    "level_6 #{question}"
+  end
+
+  def level_7 question
+    "level_7 #{question}"
+  end
+
+  def level_8 question
+    "level_8 #{question}"
+  end
+
   def convert row
     row.mb_chars.gsub(/\p{P}/, '').gsub(/\s/, ' ').downcase.normalize.strip.to_s
   end
