@@ -61,7 +61,10 @@ class ContestsController < ApplicationController
 
   def level_8 question
     mask = get_mask(convert(question)).to_a
-    answer = @poems.find { |k, v| (v[1].to_a - mask).count <= 2 && (mask - v[1].to_a).count <= 2 }
+    answer = @poems.find do |k, v|
+      hash = v[1].to_a
+      (hash - mask).count <= 2 && (mask - hash).count <= 2
+    end
     answer ? answer[0] : ''
   end
 
