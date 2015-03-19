@@ -25,7 +25,7 @@ module PushkinContestBot
 
     def get_mask(row)
       mask = Hash.new(0)
-      row.split('').each {|char| mask[char] += 1 }
+      row.gsub(/\s/, '').split('').each {|char| mask[char] += 1 }
       mask
     end
 
