@@ -69,7 +69,6 @@ class ContestsController < ApplicationController
 
   def get_mask(row)
     mask = Hash.new(0)
-    binding.pry
     row.gsub(/\s/, '').split('').each {|char| mask[char] += 1 }
     mask
   end
