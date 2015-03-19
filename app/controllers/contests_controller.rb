@@ -60,7 +60,9 @@ class ContestsController < ApplicationController
   end
 
   def level_8 question
-    "level_8 #{question}"
+    mask = get_mask(convert(question)).to_a
+    answer = @poems.find { |k, v| (v[1].to_a - mask).count <= 2 && (mask - v[1].to_a).count <= 2 }
+    answer ? answer[0] : ''
   end
 
   def convert row
