@@ -22,5 +22,24 @@ module PushkinContestBot
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
+
+    def get_mask(row)
+      mask = Hash.new(0)
+      row.split('').each {|char| mask[char] += 1 }
+      mask
+    end
+
+    poems = JSON.parse(File.read(File.expand_path('../../db/poems.json', __FILE__)))
+    hash = {}
+    poems.each_pair { |key, value| hash[key] = [value, get_mask(key)] }
+
+    config.x.poems_hash = hash
+  #  poems = JSON.parse(File.read(File.expand_path('../../db/poems-full.json', __FILE__)))
+  #  hash = {}
+  #  poems.each {|poem| poem[1].each {|row| hash[row] = poem[0] }} # key => row, value => title
+  #  poems[1][1].map { |row| row.mb_chars.normalize.gsub(/\p{P}/, '').downcase.squish.to_s } # normalize row
+
+  #  hash = Hash.new(0)
+  #  poem.row.gsub(/\s/, '').split('').map {|char| hash[char] += 1 } # add mask
   end
 end
