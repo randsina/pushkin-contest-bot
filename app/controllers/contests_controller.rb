@@ -2,18 +2,10 @@ class ContestsController < ApplicationController
   TOKEN = 'b7f513497ed4c72c2ff2db9ee7cb24d4'
   URI = URI("http://pushkin-contest.ror.by/quiz")
 
-  def registration
-    token = Token.new
-    token.name = params[:token]
-    if token.save
-      question = params[:question]
-      render json: {answer: 'снежные'}
-    end
-  end
-
   def quiz
+    @poems = Rails.configuration.x.poems_hash
     result = self.send("level_#{params[:level]}", params[:question])
-    puts result
+    p result
 
     parameters = {answer: result, token: TOKEN, task_id: params[:id]}
     Net::HTTP.post_form(URI, parameters)
@@ -24,14 +16,15 @@ class ContestsController < ApplicationController
   private
 
   def level_1 question
-    Poem.find_by(row: convert(question)).title
+    @poems[convert(question)][0]
   end
 
   def level_2 question
     question = convert(question)
     first, second = question.split('word')
-    poem = Poem.find_by("row LIKE ? AND row LIKE ?","#{first}%", "%#{second}")
-    (poem.row.split(' ') - question.split(' '))[0] if poem
+    reg = Regexp.new "\\A#{first}.*#{second}\\z"
+    str = @poems.keys.find { |row| row =~ reg }
+    (str.split(' ') - question.split(' '))[0] if str
   end
 
   def level_3 question
@@ -57,11 +50,13 @@ class ContestsController < ApplicationController
   end
 
   def level_6 question
-    "level_6 #{question}"
+    mask = get_mask(convert(question))
+    @poems.find { |k, v| v[1] == mask }[0]
   end
 
   def level_7 question
-    "level_7 #{question}"
+    mask = get_mask(convert(question))
+    @poems.find { |k, v| v[1] == mask }[0]
   end
 
   def level_8 question
@@ -69,6 +64,12 @@ class ContestsController < ApplicationController
   end
 
   def convert row
-    row.mb_chars.gsub(/\p{P}/, '').gsub(/\s/, ' ').downcase.normalize.strip.to_s
+    row.mb_chars.normalize.gsub(/\p{P}/, '').downcase.squish.to_s
+  end
+
+  def get_mask(row)
+    mask = Hash.new(0)
+    row.split('').each {|char| mask[char] += 1 }
+    mask
   end
 end
