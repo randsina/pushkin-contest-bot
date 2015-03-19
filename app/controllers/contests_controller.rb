@@ -1,19 +1,21 @@
-class ContestsController < ApplicationController
+class ContestsController < ActionController::Metal
   TOKEN = 'b7f513497ed4c72c2ff2db9ee7cb24d4'
   URI = URI("http://pushkin-contest.ror.by/quiz")
 
   def quiz
-    @poems = Rails.configuration.x.poems_hash
-    result = self.send("level_#{params[:level]}", params[:question])
+    result = get_result(params[:level], params[:question])
     p result
 
     parameters = {answer: result, token: TOKEN, task_id: params[:id]}
     Net::HTTP.post_form(URI, parameters)
-
-    render nothing: true
   end
 
   private
+
+  def get_result(level, question)
+    @poems = Rails.configuration.x.poems_hash
+    result = self.send("level_#{level}", question)
+  end
 
   def level_1 question
     @poems[convert(question)][0]
