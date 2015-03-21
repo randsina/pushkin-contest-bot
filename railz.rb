@@ -24,7 +24,7 @@ class Railz
     result = get_result(@params['level'], @params['question'])
     p result
 
-    parameters = {answer: result, token: TOKEN, task_id: params[:id]}
+    parameters = {answer: result, token: TOKEN, task_id: @params['id']}
     Net::HTTP.post_form(URI, parameters)
   end
 
