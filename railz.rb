@@ -86,7 +86,7 @@ class Railz
   end
 
   def convert row
-    row.mb_chars.normalize.gsub(/\p{P}/, '').downcase.squish.to_s
+    row.mb_chars.gsub(/\p{P}/, '').downcase.to_s.strip
   end
 
   def get_mask(row)
