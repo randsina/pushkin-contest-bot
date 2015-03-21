@@ -29,7 +29,7 @@ class Railz
   end
 
   def params
-    JSON.parse(@env['rack.input'])
+    JSON.parse(@env['rack.input'].read)
   end
 
   def get_result(level, question)
