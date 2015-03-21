@@ -20,7 +20,7 @@ class Railz
   private
 
   def process_request
-    p request
+    p env
     result = get_result(params['level'], params['question'])
     p result
 
