@@ -9,8 +9,7 @@ class Railz
   end
 
   def call(env)
-    @request  = Rack::Request.new(env)
-    p env
+    @env = env
     @response = Rack::Response.new
 
     process_request
@@ -21,6 +20,7 @@ class Railz
   private
 
   def process_request
+    p params
     result = get_result(params['level'], params['question'])
     p result
 
@@ -29,7 +29,7 @@ class Railz
   end
 
   def params
-    @request.params
+    JSON.parse(@env['rack.input'])
   end
 
   def get_result(level, question)
