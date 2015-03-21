@@ -20,6 +20,7 @@ class Railz
   private
 
   def process_request
+    p params
     result = get_result(params['level'], params['question'])
     p result
 
