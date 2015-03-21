@@ -21,7 +21,7 @@ class Railz
 
   def process_request
     p @params
-    result = get_result(@params[:level], @params[:question])
+    result = get_result(@params['level'], @params['question'])
     p result
 
     parameters = {answer: result, token: TOKEN, task_id: params[:id]}
