@@ -9,7 +9,7 @@ class Railz
   end
 
   def call(env)
-    @env = env
+    @params = JSON.parse(env['rack.input'].read)
     @response = Rack::Response.new
 
     process_request
@@ -20,16 +20,12 @@ class Railz
   private
 
   def process_request
-    p params
-    result = get_result(params['level'], params['question'])
+    p @params
+    result = get_result(@params[:level], @params[:question])
     p result
 
     parameters = {answer: result, token: TOKEN, task_id: params[:id]}
     Net::HTTP.post_form(URI, parameters)
-  end
-
-  def params
-    JSON.parse(@env['rack.input'].read)
   end
 
   def get_result(level, question)
