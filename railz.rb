@@ -1,19 +1,37 @@
-class ContestsController < ActionController::Metal
+class Railz
   TOKEN = 'b7f513497ed4c72c2ff2db9ee7cb24d4'
   URI = URI("http://pushkin-contest.ror.by/quiz")
 
-  def quiz
-    result = get_result(params[:level], params[:question])
+  def initialize
+    hash = JSON.parse(File.read(File.expand_path('../poems.json', __FILE__)))
+    @poems = {}
+    hash.each_pair { |key, value| @poems[key] = [value, get_mask(key)] }
+  end
+
+  def call(env)
+    @request  = Rack::Request.new(env)
+    @response = Rack::Response.new
+
+    process_request
+
+    @response.finish
+  end
+
+  private
+
+  def process_request
+    result = get_result(params['level'], params['question'])
     p result
 
     parameters = {answer: result, token: TOKEN, task_id: params[:id]}
     Net::HTTP.post_form(URI, parameters)
   end
 
-  private
+  def params
+    @request.params
+  end
 
   def get_result(level, question)
-    @poems = Rails.configuration.x.poems_hash
     result = self.send("level_#{level}", question)
   end
 

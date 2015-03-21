@@ -1,4 +1,12 @@
-# This file is used by Rack-based servers to start the application.
+$LOAD_PATH.unshift(File.dirname(__FILE__)) # Add current directory to load paths
 
-require ::File.expand_path('../config/environment', __FILE__)
-run Rails.application
+require 'active_support'
+require 'active_support/core_ext/string/access'
+require 'active_support/core_ext/string/behavior'
+require 'active_support/core_ext/module/delegation'
+require 'active_support/core_ext'
+require 'active_support/multibyte/chars'
+require 'json'
+require 'railz'
+
+run Railz.new
