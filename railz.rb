@@ -10,6 +10,7 @@ class Railz
 
   def call(env)
     @request  = Rack::Request.new(env)
+    p env
     @response = Rack::Response.new
 
     process_request
@@ -20,7 +21,6 @@ class Railz
   private
 
   def process_request
-    p env
     result = get_result(params['level'], params['question'])
     p result
 
