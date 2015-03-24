@@ -7,6 +7,6 @@ require 'active_support/core_ext/module/delegation'
 require 'active_support/core_ext'
 require 'active_support/multibyte/chars'
 require 'json'
-require 'railz'
+require 'Railz'
 
 run Railz.new
